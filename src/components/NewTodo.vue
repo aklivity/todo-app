@@ -17,7 +17,7 @@
 const uuid = require('uuid');
 
 export default {
-  name: 'NewToDo',
+  name: 'NewTodo',
   props: {
     taskCommandUrl: String
   },
