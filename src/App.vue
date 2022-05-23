@@ -3,8 +3,8 @@
     <img className="center" alt="Zilla logo" src="./assets/logo.png">
   </div>
   <h1>Todo App</h1>
-  <NewTodo taskCommandUrl="`${this.taskApiUrl}`"/>
-  <TodoList taskCommandUrl="`${this.taskApiUrl}`" :tasks="tasks"/>
+  <NewTodo :taskCommandUrl="taskApiUrl" />
+  <TodoList :taskCommandUrl="taskApiUrl" :tasks="tasks"/>
 </template>
 
 <script>
