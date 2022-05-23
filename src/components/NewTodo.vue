@@ -1,14 +1,14 @@
 <template>
   <div class="newTodo">
     <form @submit.prevent="addTodo()">
-      <label>New ToDo </label>
+      <label>New Todo</label>
       <input
           v-model="newTodo"
           name="newTodo"
           ref="newTodo"
           autocomplete="off"
       >
-      <button>Add ToDo</button>
+      <button>Add Todo</button>
     </form>
   </div>
 </template>

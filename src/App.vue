@@ -1,8 +1,10 @@
 <template>
-  <img alt="Aklivity logo" src="./assets/logo.png">
-  <h1>ToDo App</h1>
-  <NewTodo taskCommandUrl="http://localhost:8080/tasks" />
-  <TodoList taskCommandUrl="http://localhost:8080/tasks"  :tasks="tasks"/>
+  <div>
+    <img className="center" alt="Zilla logo" src="./assets/logo.png">
+  </div>
+  <h1>Todo App</h1>
+  <NewTodo taskCommandUrl="`${this.taskApiUrl}`"/>
+  <TodoList taskCommandUrl="`${this.taskApiUrl}`" :tasks="tasks"/>
 </template>
 
 <script>
@@ -17,14 +19,15 @@ export default {
     NewTodo,
     TodoList
   },
-  data () {
+  data() {
     return {
+      taskApiUrl: "http://localhost:8080/tasks",
       tasks: {}
     }
   },
   mounted() {
     let tasks = this.tasks
-    let es = new EventSource('http://localhost:8080/tasks', {});
+    let es = new EventSource(`${this.taskApiUrl}`, {});
     es.addEventListener('delete', (event) => {
       let lastEventId = JSON.parse(event.lastEventId);
       let key = Buffer.from(lastEventId[0], "base64").toString("utf8");
@@ -50,8 +53,7 @@ export default {
 </script>
 
 <style lang="scss">
-$border: 2px solid
-rgba(
+$border: 2px solid rgba(
     $color: white,
     $alpha: 0.35,
 );
@@ -82,9 +84,12 @@ body {
       font-size: 28px;
       text-align: center;
     }
-    img {
-      width: 100%;
-      height: auto;
+    div {
+      text-align: center;
+      img {
+        width: 250px;
+        height: auto;
+      }
     }
     form {
       display: flex;

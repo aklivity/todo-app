@@ -1,5 +1,5 @@
 <template>
-<h2>ToDo List</h2>
+  <h2>Todo List</h2>
   <ul  ref="tasks">
     <todo
         v-for="(task, key) in tasks"
@@ -10,7 +10,6 @@
     />
   </ul>
 </template>
-
 
 <script>
 import Todo from "./Todo.vue";

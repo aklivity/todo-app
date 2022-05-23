@@ -17,7 +17,7 @@
 
 <script>
 export default {
-  name: 'ToDo',
+  name: 'TodoTask',
   data() {
     return {
       isEditing: false,
