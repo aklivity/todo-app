@@ -14,7 +14,8 @@
 </template>
 
 <script>
-const uuid = require('uuid');
+import { v4 } from 'uuid';
+import { useAuth0 } from '@auth0/auth0-vue';
 
 export default {
   name: 'NewTodo',
@@ -23,13 +24,16 @@ export default {
   },
   methods: {
     async addTodo() {
+      const auth0 = useAuth0();
+      const accessToken = auth0.getTokenSilently();
       const newTodo = this.$refs.newTodo;
       if (newTodo.value) {
         const requestOptions = {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            "Idempotency-Key": uuid.v4()
+            "Idempotency-Key": v4(),
+            "Authorization": `Bearer ${accessToken}`
           },
           body: JSON.stringify({"name": newTodo.value})
         };

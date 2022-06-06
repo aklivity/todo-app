@@ -14,8 +14,7 @@
 <script>
 import Todo from "./Todo.vue";
 import {ref} from 'vue';
-
-const uuid = require('uuid');
+import {v4} from 'uuid';
 
 export default {
   name: 'TodoList',
@@ -41,7 +40,7 @@ export default {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          "Idempotency-Key": uuid.v4(),
+          "Idempotency-Key": v4(),
           "If-Match": etag
         },
         body: JSON.stringify({"name": newTodoName})
@@ -53,7 +52,7 @@ export default {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
-          "Idempotency-Key": uuid.v4()
+          "Idempotency-Key": v4()
         }
       };
       await fetch(`${this.taskCommandUrl}/${key}`, requestOptions);
