@@ -10,9 +10,10 @@
 <script>
 export default {
   name: "AuthError",
+  inject: ['$error'],
   computed: {
     msg() {
-      return this.$auth0.error.value;
+      return this.$auth0.error.value || this.$error.value;
     }
   }
 };

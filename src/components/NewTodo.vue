@@ -19,21 +19,30 @@ import { useAuth0 } from '@auth0/auth0-vue';
 
 export default {
   name: 'NewTodo',
+  setup() {
+    const auth0 = useAuth0();
+    return {
+      auth0: auth0
+    }
+  },
   props: {
     taskCommandUrl: String
   },
   methods: {
     async addTodo() {
-      const auth0 = useAuth0();
-      const accessToken = auth0.getTokenSilently();
       const newTodo = this.$refs.newTodo;
       if (newTodo.value) {
+        let authorization = {};
+        if (this.auth0.isAuthenticated.value) {
+          const accessToken = await this.auth0.getAccessTokenSilently();
+          authorization = { Authorization: `Bearer ${accessToken}` };
+        }
         const requestOptions = {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
             "Idempotency-Key": v4(),
-            "Authorization": `Bearer ${accessToken}`
+            ...authorization
           },
           body: JSON.stringify({"name": newTodo.value})
         };

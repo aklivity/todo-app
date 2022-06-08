@@ -1,11 +1,11 @@
 <template>
-  <div>
+  <div id="main">
     <div>
       <img className="center" alt="Zilla logo" src="../assets/logo.png">
     </div>
     <h1>Todo App</h1>
     <NewTodo :taskCommandUrl="taskApiUrl" />
-    <TodoList :taskCommandUrl="taskApiUrl" :tasks="tasks"/>
+    <TodoList :taskCommandUrl="taskApiUrl"/>
   </div>
 </template>
 
@@ -13,11 +13,16 @@
 import NewTodo from '../components/NewTodo'
 import TodoList from '../components/TodoList'
 import { Buffer } from 'buffer';
-
-window.Buffer = window.Buffer || Buffer;
+import {useAuth0} from "@auth0/auth0-vue";
 
 export default {
-  name: 'App',
+  name: 'Home',
+  setup() {
+    const auth0 = useAuth0();
+    return {
+      auth0: auth0
+    }
+  },
   components: {
     NewTodo,
     TodoList
@@ -25,32 +30,7 @@ export default {
   data() {
     return {
       taskApiUrl: "http://localhost:8080/tasks",
-      tasks: {}
     }
-  },
-  mounted() {
-    let tasks = this.tasks
-    let es = new EventSource(`${this.taskApiUrl}`, {});
-    es.addEventListener('delete', (event) => {
-      let lastEventId = JSON.parse(event.lastEventId);
-      let key = Buffer.from(lastEventId[0], "base64").toString("utf8");
-      delete tasks[key]
-    }, false);
-
-    es.onerror = function (err) {
-      if (err) {
-        if (err.status === 401 || err.status === 403) {
-          console.log('not authorized');
-        }
-      }
-    };
-
-    es.onmessage = function (event) {
-      let lastEventId = JSON.parse(event.lastEventId);
-      let key = Buffer.from(lastEventId[0], "base64").toString("utf8");
-      let task = JSON.parse(event.data)
-      tasks[key] = {"name": task.name, "etag": lastEventId[1]}
-    };
   }
 }
 </script>
@@ -77,7 +57,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: $backgroundColor;
   color: $textColor;
-  #app {
+  #main {
     max-width: 600px;
     margin-left: auto;
     margin-right: auto;
