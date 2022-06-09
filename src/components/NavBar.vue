@@ -101,6 +101,7 @@ export default {
   name: "NavBar",
   setup() {
     const auth0 = useAuth0();
+
     return {
       isAuthenticated: auth0.isAuthenticated,
       isLoading: auth0.isLoading,
@@ -145,4 +146,12 @@ img {
   border-color: #0d9b76;
 }
 
+.navbar .router-link-exact-active {
+  color: #0d9b76;
+  border-bottom: 3px solid #0d9b76;
+}
+
+a {
+  color: #0d9b76;
+}
 </style>
