@@ -21,7 +21,7 @@ app
       domain,
       client_id,
       redirect_uri: window.location.origin,
-      audience:"https://localhost:9090/tasks",
+      audience:"http://localhost:8080/tasks",
       scope:"read:tasks write:tasks"
       })
     )
