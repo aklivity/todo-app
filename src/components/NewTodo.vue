@@ -14,10 +14,17 @@
 </template>
 
 <script>
-const uuid = require('uuid');
+import { v4 } from 'uuid';
+import { useAuth0 } from '@auth0/auth0-vue';
 
 export default {
   name: 'NewTodo',
+  setup() {
+    const auth0 = useAuth0();
+    return {
+      auth0: auth0
+    }
+  },
   props: {
     taskCommandUrl: String
   },
@@ -25,11 +32,17 @@ export default {
     async addTodo() {
       const newTodo = this.$refs.newTodo;
       if (newTodo.value) {
+        let authorization = {};
+        if (this.auth0.isAuthenticated.value) {
+          const accessToken = await this.auth0.getAccessTokenSilently();
+          authorization = { Authorization: `Bearer ${accessToken}` };
+        }
         const requestOptions = {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            "Idempotency-Key": uuid.v4()
+            "Idempotency-Key": v4(),
+            ...authorization
           },
           body: JSON.stringify({"name": newTodo.value})
         };
