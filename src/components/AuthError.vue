@@ -13,7 +13,7 @@ export default {
   inject: ['$error'],
   computed: {
     msg() {
-      return this.$auth0.error.value || this.$error.value;
+      return this.$auth0.error?.value || this.$error?.value;
     }
   }
 };

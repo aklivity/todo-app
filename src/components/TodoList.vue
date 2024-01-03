@@ -70,7 +70,7 @@ export default {
 
       eventStream.onerror = function (err) {
           setTimeout(() => {
-            if (eventStream.readyState != EventSource.OPEN) {
+            if (error && eventStream.readyState != EventSource.OPEN) {
                error.value = "Login Required";
             }
           }, 3000);
