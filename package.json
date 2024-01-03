@@ -38,7 +38,7 @@
     "error-stack-parser": "2.0.6",
     "eslint": "^7.5.0",
     "eslint-plugin-vue": "^7.0.0",
-    "node-sass": "^7.0.1",
+    "node-sass": "^9.0.0",
     "sass-loader": "^12.6.0",
     "typescript": "~4.7.2"
   },
